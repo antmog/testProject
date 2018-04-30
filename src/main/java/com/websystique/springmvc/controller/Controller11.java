@@ -1,0 +1,31 @@
+package com.websystique.springmvc.controller;
+
+
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/")
+public class Controller11 {
+
+    //public String post1( @RequestBody Marker marker) {
+
+    //@RequestMapping(value="/ss", method = RequestMethod.POST,consumes = "application/json")
+    @RequestMapping(value="/ss", method = RequestMethod.POST)
+    public String post( @RequestBody String marker) {
+        System.out.println(marker);
+        return "OKAY";
+    }
+
+    @RequestMapping(value="/sss", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @ResponseBody  public Marker sss( ) {
+
+        Marker marker1 = new Marker("s","g");
+        return marker1;
+    }
+
+}
