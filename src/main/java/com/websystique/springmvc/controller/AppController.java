@@ -23,13 +23,7 @@ public class AppController {
 		return "/test";
 	}
 
-	@RequestMapping(value="/ss1", method = RequestMethod.POST,consumes = "application/json")
-	public String post1( @RequestBody Marker marker) {
-		System.out.println("CTR:"+marker);
-		System.out.println("CTR:"+marker);
 
-		return "OKAY";
-	}
 
 
 

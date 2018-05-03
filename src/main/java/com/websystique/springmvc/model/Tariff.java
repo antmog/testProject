@@ -1,7 +1,6 @@
 package com.websystique.springmvc.model;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,18 +17,24 @@ public class Tariff implements Serializable {
     @Column(name = "TARIFF_ID")
     private Integer id;
 
-    @NotEmpty
     @Column(name="NAME", unique=true, nullable=false)
     private String name;
 
-    @NotEmpty
+    /**
+     * per month
+     * Allows to use the tariff -> allows to use the options (options have its own cost/price)
+     */
+
     @Column(name="PRICE", nullable=false)
     private Double price;
+
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @Column(name = "TARIFF_CONTRACTS", nullable = false)
+    private Set<Contract> tariffContracts = new HashSet<Contract>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "AVAILABLE_OPTIONS",
             joinColumns = {@JoinColumn(name = "TARIFF_ID", nullable = false, referencedColumnName = "TARIFF_ID")},
             inverseJoinColumns = {@JoinColumn(name = "OPTION_ID", nullable = false, referencedColumnName = "OPTION_ID")})
-    private Set<TariffOption> excludingTariffOptions = new HashSet<TariffOption>();
-
+    private Set<TariffOption> availableOptions = new HashSet<TariffOption>();
 }

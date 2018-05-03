@@ -1,11 +1,9 @@
 package com.websystique.springmvc.model;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,38 +14,33 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "USER_ID")
     private Integer id;
 
-    @NotEmpty
     @Column(name = "FIRST_NAME", nullable = false)
     private String firstName;
 
-    @NotEmpty
     @Column(name = "LAST_NAME", nullable = false)
     private String lastName;
 
-    @NotEmpty
     @Column(name = "ADRESS", nullable = false)
-    private String adress;
+    private String address;
 
-    @NotEmpty
+
     @Column(name = "BIRTH_DATE", nullable = false)
     private String birthDate;
 
-    @NotEmpty
+
     @Column(name = "PASSPORT_ID", nullable = false, unique = true)
     private Integer passport;
 
 
-    @NotEmpty
     @Column(name = "MAIL", nullable = false, unique = true)
     private String mail;
 
-    @NotEmpty
     @Column(name = "LOGIN", nullable = false, unique = true)
     private String login;
 
-    @NotEmpty
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
@@ -55,10 +48,49 @@ public class User implements Serializable {
     @Column(name = "ROLE", nullable = false)
     private Role role;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "STATUS", nullable = false)
+    private Status status = Status.ACTIVE;
 
-    @OneToMany(mappedBy = "user")
-    @NotEmpty
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     @Column(name = "USER_CONTRACTS", nullable = false)
     private Set<Contract> userContracts = new HashSet<Contract>();
 
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName
+                + ", address=" + address + ", birthDate=" + birthDate+ ", passport=" + passport +
+                ", role=" + role +  ", mail=" + mail +  ", login=" +  login  +"]";
+
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof User))
+            return false;
+        User other = (User) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
 }

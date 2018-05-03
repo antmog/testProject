@@ -4,16 +4,19 @@ package com.websystique.springmvc.controller;
 
 import java.io.Serializable;
 
-public class Marker{
-    private String position;
+public class Marker implements Serializable{
+    private int position;
     private String markerPosition;
 
-    public Marker(String position, String markerPosition) {
+    public Marker() {
+
+    }
+    public Marker(int position, String markerPosition) {
         this.position = position;
         this.markerPosition = markerPosition;
     }
 
-    public void setPosition(String position) {
+    public void setPosition(int position) {
 
         this.position = position;
     }
@@ -22,11 +25,16 @@ public class Marker{
         this.markerPosition = markerPosition;
     }
 
-    public String getPosition() {
+    public int getPosition() {
         return position;
     }
 
     public String getMarkerPosition() {
         return markerPosition;
+    }
+
+    @Override
+    public String toString() {
+        return "Position: "+position+" markerPosition: " + markerPosition;
     }
 }
